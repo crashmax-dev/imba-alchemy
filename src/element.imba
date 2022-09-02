@@ -4,15 +4,12 @@ import { isDev } from './constants'
 export tag Element
 	attr name\string
 	attr displayName\string
+	attr size\number
 
 	css .element
 		us:none
 		pos:absolute
 		touch-action:manipulation
-
-	css .image
-		w:80px
-		h:80px
 
 	css .title
 		c:white
@@ -27,5 +24,5 @@ export tag Element
 	def render
 		<self[x:{x} y:{y}] @touch.moved.sync(self)>
 			<div.element[bd:{isDev ? 'dashed' : 'none'} bc:red]>
-				<img.image src="/images/{name}.webp" draggable=false>
-				<div.title> "{displayName}"
+				<img[w:{size}] src="/images/{name}.webp" draggable=false>
+				<div.title innerHTML=displayName.replace('&nbsp;', '<br />')>

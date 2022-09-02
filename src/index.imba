@@ -9,30 +9,34 @@ global css body
 
 tag App
 	prop storage = new Storage
-	prop elements\IElement[]
+	prop allElements\IElement[]
 
 	def mount
 		const response = await window.fetch('/elements.json')
-		elements = await response.json!
+		allElements = await response.json!
 
 	def getRects(name\string)
 		const rects = Object.values(this.children).map(do(el)
 			{
-				rects: el.getBoundingClientRect!
+				rects: el.children[0].getBoundingClientRect!
 				name: el.getAttribute('name')
 			}
 		)
 
-		console.log rects
+		console.log name, rects
 
 	def render
 		<self[pos:relative]>
-			if storage && elements
-				for id of storage.getStorage!
-					const el = elements[id - 1]
+			if storage && allElements
+				const elements = storage.getItem(storage.keys.elements)
+				const settings = storage.getItem(storage.keys.settings)
+				<span[c:white pos:absolute r:0 z:999 fs:10]> "{elements.length}/{allElements.length}"
+				for element of elements
+					const el = allElements[element - 1]
 					<Element
 						name=el.class
 						displayName=el.text
+						size=settings.size
 						@mouseup=getRects(el.class)
 					>
 

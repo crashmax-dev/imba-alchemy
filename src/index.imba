@@ -2,6 +2,7 @@ import { Board } from './board'
 import { Counter } from './counter'
 import { Storage } from './storage'
 import elements from './elements.json'
+import type { IElement, ISettings } from './types'
 
 global css body
 	bg:black
@@ -10,12 +11,18 @@ global css body
 
 tag App
 	prop storage = new Storage
+	prop settings\ISettings = storage.settings
+	prop elementsId\number[] = storage.elements
+
+	css
+		pos:relative
 
 	def render
-		<self[pos:relative]>
-			const settings = storage.settings
-			const elementsId = storage.elements
-			<Counter current=elementsId.length max=elements.length>
+		<self>
+			<Counter
+				current=elementsId.length
+				max=elements.length
+			>
 			<Board
 				elementsId=elementsId
 				elements=elements

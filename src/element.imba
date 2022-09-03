@@ -4,7 +4,7 @@ import { isDev } from './constants'
 export tag Element
 	attr name\string
 	attr displayName\string
-	attr size\number
+	attr size\string
 
 	css .element
 		us:none

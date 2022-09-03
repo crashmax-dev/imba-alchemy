@@ -6,3 +6,8 @@ export interface IElement {
   description: string
   recept?: string[][]
 }
+
+export interface ISettings {
+  size: number
+  sound: boolean
+}

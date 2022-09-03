@@ -5,9 +5,15 @@ export class Storage
 	}
 
 	constructor
-		this.values
+		this.initialStore!
 
-	get values
+	get elements
+		this.getItem(this.keys.elements)
+
+	get settings
+		this.getItem(this.keys.settings)
+
+	def initialStore
 		let settings = this.getItem(this.keys.settings)
 		let elements = this.getItem(this.keys.elements)
 
@@ -21,11 +27,8 @@ export class Storage
 
 		if !elements
 			const initialElements = [1, 2, 3, 4]
-			# const initialElements = Array.from({ length: 396 }, do(_, key) key + 1)
 			this.setItem(this.keys.elements, initialElements)
 			elements = initialElements
-
-		{ settings, elements }
 
 	def getItem(key\string)
 		try
